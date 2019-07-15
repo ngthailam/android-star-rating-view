@@ -7,6 +7,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -27,7 +28,6 @@ class StarView @JvmOverloads constructor(
     // TODO: impelement isAnimated
     companion object {
         private val DECELERATE_INTERPOLATOR = DecelerateInterpolator()
-        private val ACCELERATE_INTERPOLATOR = AccelerateInterpolator()
         private val OVERSHOOT_INTERPOLATOR = OvershootInterpolator()
         private val ACCELERATE_DECELERATE_INTERPOLATOR = AccelerateDecelerateInterpolator()
 
@@ -60,16 +60,18 @@ class StarView @JvmOverloads constructor(
         animatorSet = AnimatorSet()
         //
         val outerCircleAnimator =
-            ObjectAnimator.ofFloat(vCircleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f).apply {
-                duration = 250
-                interpolator = DECELERATE_INTERPOLATOR
-            }
+            ObjectAnimator.ofFloat(vCircleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f)
+                .apply {
+                    duration = 250
+                    interpolator = DECELERATE_INTERPOLATOR
+                }
         val innerCircleAnimator =
-            ObjectAnimator.ofFloat(vCircleView, CircleView.INNER_CIRCLE_CURRENT_RADIUS, 0.1f, 1f).apply {
-                duration = 200
-                startDelay = 200
-                interpolator = DECELERATE_INTERPOLATOR
-            }
+            ObjectAnimator.ofFloat(vCircleView, CircleView.INNER_CIRCLE_CURRENT_RADIUS, 0.1f, 1f)
+                .apply {
+                    duration = 200
+                    startDelay = 200
+                    interpolator = DECELERATE_INTERPOLATOR
+                }
         val starScaleXAnimator =
             ObjectAnimator.ofFloat(ivStarViewStar, ImageView.SCALE_Y, 0.2f, 1f).apply {
                 duration = 350

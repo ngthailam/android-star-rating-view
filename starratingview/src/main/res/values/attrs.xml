@@ -3,5 +3,6 @@
     <declare-styleable name="StarRatingView">
         <attr name="numStar" format="integer"/>
         <attr name="enableStarAnim" format="boolean" />
+        <attr name="starSize" format="integer" />
     </declare-styleable>
 </resources>

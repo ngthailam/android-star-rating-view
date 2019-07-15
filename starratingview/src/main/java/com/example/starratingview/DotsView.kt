@@ -24,6 +24,7 @@ class DotsView @JvmOverloads constructor(
     private var maxOuterDotsRadius: Float = 0f
     private var maxInnerDotsRadius: Float = 0f
     private var maxDotSize: Float = 0f
+    private var dotSizeProportion: Float = 0.05f
 
     private var currentProgress = 0f
 
@@ -68,7 +69,7 @@ class DotsView @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         centerX = w / 2
         centerY = h / 2
-        maxDotSize = 15f
+        maxDotSize = ((w + h) / 2) * dotSizeProportion
         maxOuterDotsRadius = centerX - maxDotSize * 2
         maxInnerDotsRadius = 0.8f * maxOuterDotsRadius // some magic number
     }
