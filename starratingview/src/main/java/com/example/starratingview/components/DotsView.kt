@@ -1,4 +1,4 @@
-package com.example.starratingview
+package com.example.starratingview.components
 
 import android.animation.ArgbEvaluator
 import android.content.Context
@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.util.Property
 import android.view.View
+import com.example.starratingview.Utils
 
 /**
  * Created by ngthailam on 15/07/2019
@@ -127,22 +128,35 @@ class DotsView @JvmOverloads constructor(
     private fun updateInnerDotsPosition() {
         if (currentProgress < 0.3f) {
             this.currentRadius2 =
-                Utils.mapValueFromRangeToRange(currentProgress, 0f, 0.3f, 0f, maxInnerDotsRadius)
+                Utils.mapValueFromRangeToRange(
+                    currentProgress,
+                    0f,
+                    0.3f,
+                    0f,
+                    maxInnerDotsRadius
+                )
         } else {
             this.currentRadius2 = maxInnerDotsRadius
         }
 
         when {
             currentProgress < 0.2 -> this.currentDotSize2 = maxDotSize
-            currentProgress < 0.5 -> this.currentDotSize2 = Utils.mapValueFromRangeToRange(
-                currentProgress,
-                0.2f,
-                0.5f,
-                maxDotSize,
-                0.3f * maxDotSize
-            )
+            currentProgress < 0.5 -> this.currentDotSize2 =
+                Utils.mapValueFromRangeToRange(
+                    currentProgress,
+                    0.2f,
+                    0.5f,
+                    maxDotSize,
+                    0.3f * maxDotSize
+                )
             else -> this.currentDotSize2 =
-                Utils.mapValueFromRangeToRange(currentProgress, 0.5f, 1f, maxDotSize * 0.3f, 0f)
+                Utils.mapValueFromRangeToRange(
+                    currentProgress,
+                    0.5f,
+                    1f,
+                    maxDotSize * 0.3f,
+                    0f
+                )
         }
     }
 
@@ -157,42 +171,91 @@ class DotsView @JvmOverloads constructor(
                     maxOuterDotsRadius * 0.8f
                 )
         } else {
-            this.currentRadius1 = Utils.mapValueFromRangeToRange(
-                currentProgress,
-                0.3f,
-                1f,
-                0.8f * maxOuterDotsRadius,
-                maxOuterDotsRadius
-            )
+            this.currentRadius1 =
+                Utils.mapValueFromRangeToRange(
+                    currentProgress,
+                    0.3f,
+                    1f,
+                    0.8f * maxOuterDotsRadius,
+                    maxOuterDotsRadius
+                )
         }
 
         if (currentProgress < 0.7) {
             this.currentDotSize1 = maxDotSize
         } else {
             this.currentDotSize1 =
-                Utils.mapValueFromRangeToRange(currentProgress, 0.7f, 1f, maxDotSize, 0f)
+                Utils.mapValueFromRangeToRange(
+                    currentProgress,
+                    0.7f,
+                    1f,
+                    maxDotSize,
+                    0f
+                )
         }
     }
 
     private fun updateDotsPaints() {
         if (currentProgress < 0.5f) {
-            val progress = Utils.mapValueFromRangeToRange(currentProgress, 0f, 0.5f, 0f, 1f)
-            circlePaints[0]?.color = argbEvaluator.evaluate(progress, COLOR_1, COLOR_2) as Int
-            circlePaints[1]?.color = argbEvaluator.evaluate(progress, COLOR_2, COLOR_3) as Int
-            circlePaints[2]?.color = argbEvaluator.evaluate(progress, COLOR_3, COLOR_4) as Int
-            circlePaints[3]?.color = argbEvaluator.evaluate(progress, COLOR_4, COLOR_1) as Int
+            val progress = Utils.mapValueFromRangeToRange(
+                currentProgress,
+                0f,
+                0.5f,
+                0f,
+                1f
+            )
+            circlePaints[0]?.color = argbEvaluator.evaluate(progress,
+                COLOR_1,
+                COLOR_2
+            ) as Int
+            circlePaints[1]?.color = argbEvaluator.evaluate(progress,
+                COLOR_2,
+                COLOR_3
+            ) as Int
+            circlePaints[2]?.color = argbEvaluator.evaluate(progress,
+                COLOR_3,
+                COLOR_4
+            ) as Int
+            circlePaints[3]?.color = argbEvaluator.evaluate(progress,
+                COLOR_4,
+                COLOR_1
+            ) as Int
         } else {
-            val progress = Utils.mapValueFromRangeToRange(currentProgress, 0.5f, 1f, 0f, 1f)
-            circlePaints[0]?.color = argbEvaluator.evaluate(progress, COLOR_2, COLOR_3) as Int
-            circlePaints[1]?.color = argbEvaluator.evaluate(progress, COLOR_3, COLOR_4) as Int
-            circlePaints[2]?.color = argbEvaluator.evaluate(progress, COLOR_4, COLOR_1) as Int
-            circlePaints[3]?.color = argbEvaluator.evaluate(progress, COLOR_1, COLOR_2) as Int
+            val progress = Utils.mapValueFromRangeToRange(
+                currentProgress,
+                0.5f,
+                1f,
+                0f,
+                1f
+            )
+            circlePaints[0]?.color = argbEvaluator.evaluate(progress,
+                COLOR_2,
+                COLOR_3
+            ) as Int
+            circlePaints[1]?.color = argbEvaluator.evaluate(progress,
+                COLOR_3,
+                COLOR_4
+            ) as Int
+            circlePaints[2]?.color = argbEvaluator.evaluate(progress,
+                COLOR_4,
+                COLOR_1
+            ) as Int
+            circlePaints[3]?.color = argbEvaluator.evaluate(progress,
+                COLOR_1,
+                COLOR_2
+            ) as Int
         }
     }
 
     private fun updateDotsAlpha() {
         val progress = Utils.clamp(currentProgress, 0.6f, 1f)
-        val alpha = Utils.mapValueFromRangeToRange(progress, 0.6f, 1f, 255f, 0f).toInt()
+        val alpha = Utils.mapValueFromRangeToRange(
+            progress,
+            0.6f,
+            1f,
+            255f,
+            0f
+        ).toInt()
         circlePaints[0]?.alpha = alpha
         circlePaints[1]?.alpha = alpha
         circlePaints[2]?.alpha = alpha

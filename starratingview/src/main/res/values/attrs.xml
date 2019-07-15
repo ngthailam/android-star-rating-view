@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="StarRatingView">
-        <attr name="numStar" format="integer"/>
-        <attr name="enableStarAnim" format="boolean" />
-        <attr name="starSize" format="integer" />
+        <attr name="svNumStar" format="integer"/>
+        <attr name="svEnableAnim" format="boolean" />
+        <attr name="svSize" format="integer" />
+        <attr name="svEnableCircle" format="boolean" />
+        <attr name="svCircleStartColor" format="color" />
+        <attr name="svCircleEndColor" format="color" />
+        <attr name="svCircleRadius" format="float" />
+        <attr name="svEnableDots" format="boolean" />
+        <attr name="svDotsCount" format="integer" />
+        <attr name="svDotsProp" format="float" />
+        <attr name="svDotsColor1" format="color" />
+        <attr name="svDotsColor2" format="color" />
+        <attr name="svDotsColor3" format="color" />
+        <attr name="svDotsColor4" format="color" />
     </declare-styleable>
 </resources>

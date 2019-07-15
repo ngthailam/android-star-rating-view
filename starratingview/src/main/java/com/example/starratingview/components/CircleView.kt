@@ -1,4 +1,4 @@
-package com.example.starratingview
+package com.example.starratingview.components
 
 import android.animation.ArgbEvaluator
 import android.content.Context
@@ -12,6 +12,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.util.Property
 import android.view.View
+import com.example.starratingview.Utils
 
 /**
  * Created by ngthailam on 14/07/2019
@@ -29,13 +30,14 @@ class CircleView @JvmOverloads constructor(
     private lateinit var tempCanvas: Canvas
     private var maxCircleRadius: Int = 0
     // customizable values in the future
-    private var startColor = DEFAULT_START_COLOR
-    private var endColor = DEFAULT_END_COLOR
+    private var startColor =
+        DEFAULT_START_COLOR
+    private var endColor =
+        DEFAULT_END_COLOR
     private var outerCircleCurrentRadius: Float = 0f
     private var innerCircleCurrentRadius: Float = 0f
 
     companion object {
-        //0xFFFF5722      0xFFFFC107
         const val TAG = "CircleView"
         const val DEFAULT_START_COLOR = Color.RED
         const val DEFAULT_END_COLOR = Color.BLUE
@@ -72,7 +74,8 @@ class CircleView @JvmOverloads constructor(
             xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         }
         startColor = DEFAULT_START_COLOR
-        endColor = DEFAULT_END_COLOR // will change to accept customize color
+        endColor =
+            DEFAULT_END_COLOR // will change to accept customize color
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {

@@ -1,4 +1,4 @@
-package com.example.starratingview
+package com.example.starratingview.components
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
@@ -7,15 +7,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.animation.addListener
 import androidx.core.animation.doOnCancel
+import com.example.starratingview.R
+import com.example.starratingview.StarState
 import kotlinx.android.synthetic.main.star_view.view.*
 import java.lang.IllegalArgumentException
 
@@ -43,9 +43,14 @@ class StarView @JvmOverloads constructor(
         View.inflate(ctx, R.layout.star_view, this)
         //
         @SuppressLint("CustomViewStyleable")
-        val typedArray = ctx.obtainStyledAttributes(attrs, R.styleable.StarRatingView)
+        val typedArray = ctx.obtainStyledAttributes(attrs,
+            R.styleable.StarRatingView
+        )
         isAnimated =
-            typedArray.getBoolean(R.styleable.StarRatingView_enableStarAnim, DEFAULT_IS_ANIMATED)
+            typedArray.getBoolean(
+                R.styleable.StarRatingView_svEnableAnim,
+                DEFAULT_IS_ANIMATED
+            )
         typedArray.recycle()
     }
 
@@ -60,36 +65,44 @@ class StarView @JvmOverloads constructor(
         animatorSet = AnimatorSet()
         //
         val outerCircleAnimator =
-            ObjectAnimator.ofFloat(vCircleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f)
+            ObjectAnimator.ofFloat(vCircleView,
+                CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f)
                 .apply {
                     duration = 250
-                    interpolator = DECELERATE_INTERPOLATOR
+                    interpolator =
+                        DECELERATE_INTERPOLATOR
                 }
         val innerCircleAnimator =
-            ObjectAnimator.ofFloat(vCircleView, CircleView.INNER_CIRCLE_CURRENT_RADIUS, 0.1f, 1f)
+            ObjectAnimator.ofFloat(vCircleView,
+                CircleView.INNER_CIRCLE_CURRENT_RADIUS, 0.1f, 1f)
                 .apply {
                     duration = 200
                     startDelay = 200
-                    interpolator = DECELERATE_INTERPOLATOR
+                    interpolator =
+                        DECELERATE_INTERPOLATOR
                 }
         val starScaleXAnimator =
             ObjectAnimator.ofFloat(ivStarViewStar, ImageView.SCALE_Y, 0.2f, 1f).apply {
                 duration = 350
                 startDelay = 250
-                interpolator = OVERSHOOT_INTERPOLATOR
+                interpolator =
+                    OVERSHOOT_INTERPOLATOR
             }
         val starScaleYAnimator =
             ObjectAnimator.ofFloat(ivStarViewStar, ImageView.SCALE_X, 0.2f, 1f).apply {
                 duration = 350
                 startDelay = 250
-                interpolator = OVERSHOOT_INTERPOLATOR
+                interpolator =
+                    OVERSHOOT_INTERPOLATOR
             }
 
         val dotsAnimator =
-            ObjectAnimator.ofFloat(vDotsView, DotsView.DOTS_PROGRESS, 0f, 1f).apply {
+            ObjectAnimator.ofFloat(vDotsView,
+                DotsView.DOTS_PROGRESS, 0f, 1f).apply {
                 duration = 900
                 startDelay = 50
-                interpolator = ACCELERATE_DECELERATE_INTERPOLATOR
+                interpolator =
+                    ACCELERATE_DECELERATE_INTERPOLATOR
             }
         //
         animatorSet?.playTogether(
@@ -126,7 +139,8 @@ class StarView @JvmOverloads constructor(
                         scaleX(0.7f)
                         scaleY(0.7f)
                         duration = 150
-                        interpolator = DECELERATE_INTERPOLATOR
+                        interpolator =
+                            DECELERATE_INTERPOLATOR
                     }
                 }
                 isPressed = true
@@ -136,7 +150,8 @@ class StarView @JvmOverloads constructor(
                     ivStarViewStar.animate().run {
                         scaleX(1f)
                         scaleY(1f)
-                        interpolator = DECELERATE_INTERPOLATOR
+                        interpolator =
+                            DECELERATE_INTERPOLATOR
                     }
                 }
                 if (isPressed) {
@@ -157,7 +172,8 @@ class StarView @JvmOverloads constructor(
                     ivStarViewStar.animate().run {
                         scaleX(1f)
                         scaleY(1f)
-                        interpolator = DECELERATE_INTERPOLATOR
+                        interpolator =
+                            DECELERATE_INTERPOLATOR
                     }
                 }
                 isPressed = false

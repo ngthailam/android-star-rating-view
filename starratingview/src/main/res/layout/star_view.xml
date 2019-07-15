@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.starratingview.CircleView
+    <com.example.starratingview.components.CircleView
         android:id="@+id/vCircleView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
-    <com.example.starratingview.DotsView
+    <com.example.starratingview.components.DotsView
         android:id="@+id/vDotsView"
         android:layout_width="0dp"
         android:layout_height="0dp"

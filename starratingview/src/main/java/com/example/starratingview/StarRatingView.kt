@@ -5,7 +5,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.example.starratingview.components.StarView
 import kotlinx.android.synthetic.main.star_rating_view.view.*
+import java.lang.IndexOutOfBoundsException
 
 class StarRatingView @JvmOverloads constructor(
     private val ctx: Context,
@@ -21,14 +23,13 @@ class StarRatingView @JvmOverloads constructor(
     private var totalStarNum: Int = 0
     private var selectedStarNum: Int = 0
     private var enableAnimation: Boolean = true
-
     private var starSize = 0
 
     init {
         View.inflate(ctx, R.layout.star_rating_view, this)
         val typedArray = ctx.obtainStyledAttributes(attrs, R.styleable.StarRatingView)
-        totalStarNum = typedArray.getInt(R.styleable.StarRatingView_numStar, DEFAULT_NUM_STAR)
-        starSize = typedArray.getInt(R.styleable.StarRatingView_starSize, DEFAULT_STAR_SIZE)
+        totalStarNum = typedArray.getInt(R.styleable.StarRatingView_svNumStar, DEFAULT_NUM_STAR)
+        starSize = typedArray.getInt(R.styleable.StarRatingView_svSize, DEFAULT_STAR_SIZE)
         typedArray.recycle()
         setupUI()
     }
@@ -52,13 +53,19 @@ class StarRatingView @JvmOverloads constructor(
             llStarRatingView.getChildAt(viewIndex).setOnClickListener {
                 val currStar = viewIndex + 1
                 setSelectedStarNum(currStar)
-                for (index in 0 until currStar) {
-                    (llStarRatingView.getChildAt(index) as StarView).animateToChecked()
-                }
-                for (index in currStar until totalStarNum) {
-                    (llStarRatingView.getChildAt(index) as StarView).animateToUnchecked()
-                }
             }
+        }
+    }
+
+    private fun animateStarOnSelectedPosition(position: Int) {
+        if (position < 0 || position > totalStarNum) throw IndexOutOfBoundsException()
+        for (index in 0 until position) {
+            val starView: View? = llStarRatingView?.getChildAt(index)
+            if (starView is StarView) starView.animateToChecked()
+        }
+        for (index in position until totalStarNum) {
+            val starView: View? = llStarRatingView?.getChildAt(index)
+            if (starView is StarView) starView.animateToUnchecked()
         }
     }
 
@@ -75,15 +82,43 @@ class StarRatingView @JvmOverloads constructor(
     }
 
     override fun unselectAllStars() {
-        for (index in 0..totalStarNum) {
-            if (llStarRatingView.getChildAt(index) is StarView) {
-                (llStarRatingView.getChildAt(index) as StarView).animateToUnchecked()
-            }
-        }
         setSelectedStarNum(0)
     }
 
     override fun setSelectedStarNum(num: Int) {
+        animateStarOnSelectedPosition(num)
         this.selectedStarNum = num
+    }
+
+    override fun setNumStars(num: Int) {
+        this.totalStarNum = num
+    }
+
+    override fun setStarSize(size: Int) {
+        this.starSize = size
+    }
+
+    override fun enableDots() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun enableCircle() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun disableDots() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun disableCircle() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setCircleStartColor(color: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setCircleEndColor(color: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
