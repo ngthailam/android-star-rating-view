@@ -12,6 +12,12 @@
         android:layout_height="80dp"
         android:layout_gravity="center"/>
 
+    <com.example.starratingview.DotsView
+        android:id="@+id/vDotsView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"/>
+
     <ImageView
         android:id="@+id/ivStarViewStar"
         android:layout_width="40dp"

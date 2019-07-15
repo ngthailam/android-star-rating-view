@@ -7,6 +7,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
@@ -25,9 +26,11 @@ class StarView @JvmOverloads constructor(
 
     // TODO: impelement isAnimated
     companion object {
-        val DECELERATE_INTERPOLATOR = DecelerateInterpolator()
-        val ACCELERATE_INTERPOLATOR = AccelerateInterpolator()
-        val OVERSHOOT_INTERPOLATOR = OvershootInterpolator()
+        private val DECELERATE_INTERPOLATOR = DecelerateInterpolator()
+        private val ACCELERATE_INTERPOLATOR = AccelerateInterpolator()
+        private val OVERSHOOT_INTERPOLATOR = OvershootInterpolator()
+        private val ACCELERATE_DECELERATE_INTERPOLATOR = AccelerateDecelerateInterpolator()
+
         //
         const val DEFAULT_IS_ANIMATED = true
     }
@@ -79,13 +82,21 @@ class StarView @JvmOverloads constructor(
                 startDelay = 250
                 interpolator = OVERSHOOT_INTERPOLATOR
             }
+
+        val dotsAnimator =
+            ObjectAnimator.ofFloat(vDotsView, DotsView.DOTS_PROGRESS, 0f, 1f).apply {
+                duration = 900
+                startDelay = 50
+                interpolator = ACCELERATE_DECELERATE_INTERPOLATOR
+            }
         //
         animatorSet?.playTogether(
             listOf(
                 outerCircleAnimator,
                 innerCircleAnimator,
                 starScaleXAnimator,
-                starScaleYAnimator
+                starScaleYAnimator,
+                dotsAnimator
             )
         )
         animatorSet?.addListener {
@@ -166,5 +177,6 @@ class StarView @JvmOverloads constructor(
         ivStarViewStar.scaleY = 0f
         vCircleView.setOuterCircleCurrentRadius(0f)
         vCircleView.setInnerCircleCurrentRadius(0f)
+        vDotsView.setCurrentProgress(0f)
     }
 }
