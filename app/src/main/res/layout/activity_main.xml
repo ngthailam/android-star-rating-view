@@ -7,10 +7,11 @@
     tools:context=".MainActivity">
 
     <com.example.starratingview.StarRatingView
-        android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         app:enableStarAnim="true"
         app:numStar="5"
+        app:starSize="150"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
