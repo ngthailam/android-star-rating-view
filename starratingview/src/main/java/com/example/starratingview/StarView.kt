@@ -41,7 +41,8 @@ class StarView @JvmOverloads constructor(
         //
         @SuppressLint("CustomViewStyleable")
         val typedArray = ctx.obtainStyledAttributes(attrs, R.styleable.StarRatingView)
-        isAnimated = typedArray.getBoolean(R.styleable.StarRatingView_enableStarAnim, DEFAULT_IS_ANIMATED)
+        isAnimated =
+            typedArray.getBoolean(R.styleable.StarRatingView_enableStarAnim, DEFAULT_IS_ANIMATED)
         typedArray.recycle()
     }
 
@@ -51,12 +52,21 @@ class StarView @JvmOverloads constructor(
 
         if (!isAnimated) return
 
-        ivStarViewStar.animate().cancel()
-        ivStarViewStar.scaleX = 0f
-        ivStarViewStar.scaleY = 0f
+        resetAnimatorValues()
         //
         animatorSet = AnimatorSet()
         //
+        val outerCircleAnimator =
+            ObjectAnimator.ofFloat(vCircleView, CircleView.OUTER_CIRCLE_RADIUS_PROGRESS, 0.1f, 1f).apply {
+                duration = 250
+                interpolator = DECELERATE_INTERPOLATOR
+            }
+        val innerCircleAnimator =
+            ObjectAnimator.ofFloat(vCircleView, CircleView.INNER_CIRCLE_CURRENT_RADIUS, 0.1f, 1f).apply {
+                duration = 200
+                startDelay = 200
+                interpolator = DECELERATE_INTERPOLATOR
+            }
         val starScaleXAnimator =
             ObjectAnimator.ofFloat(ivStarViewStar, ImageView.SCALE_Y, 0.2f, 1f).apply {
                 duration = 350
@@ -72,6 +82,8 @@ class StarView @JvmOverloads constructor(
         //
         animatorSet?.playTogether(
             listOf(
+                outerCircleAnimator,
+                innerCircleAnimator,
                 starScaleXAnimator,
                 starScaleYAnimator
             )
@@ -147,4 +159,12 @@ class StarView @JvmOverloads constructor(
     }
 
     fun getState() = this.state
+
+    private fun resetAnimatorValues() {
+        ivStarViewStar.animate().cancel()
+        ivStarViewStar.scaleX = 0f
+        ivStarViewStar.scaleY = 0f
+        vCircleView.setOuterCircleCurrentRadius(0f)
+        vCircleView.setInnerCircleCurrentRadius(0f)
+    }
 }

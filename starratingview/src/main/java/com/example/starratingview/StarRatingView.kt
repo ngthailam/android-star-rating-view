@@ -32,10 +32,12 @@ class StarRatingView @JvmOverloads constructor(
     }
 
     private fun setupUI() {
+        // TODO: may need to merge 2 for loops
         for (item in 0 until totalStarNum) {
             val starView = StarView(ctx, attrs, 0)
             llStarRatingView.addView(starView)
         }
+        // set click listener for all starts
         for (viewIndex in 0 until totalStarNum) {
             llStarRatingView.getChildAt(viewIndex).setOnClickListener {
                 val currStar = viewIndex + 1
